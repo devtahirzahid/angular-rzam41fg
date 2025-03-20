@@ -1,0 +1,12 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, select, button {
+  display: block;
+  margin-bottom: 10px;
+}
+small {
+  color: red;
+}

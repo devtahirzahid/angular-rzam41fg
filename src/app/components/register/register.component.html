@@ -1,0 +1,40 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" formControlName="username" />
+    <div *ngIf="username?.invalid && username?.touched" class="error">
+      Username is required and should be 3-24 characters.
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="email?.invalid && email?.touched" class="error">
+      Valid email is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="type">Type:</label>
+    <select id="type" formControlName="type">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div *ngIf="password?.invalid && password?.touched" class="error">
+      Password must be 5-24 characters and include uppercase, lowercase, and a
+      special character.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="isSubmitting || userForm.invalid">
+    {{ isSubmitting ? 'Submitting...' : 'Register' }}
+  </button>
+
+  <div *ngIf="message">{{ message }}</div>
+</form>
