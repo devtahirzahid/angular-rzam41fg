@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 // You can manage environment configs like this (Optional)
-const BASE_API_URL =
-  'https://noderqkdrxlu-w2pg--3000--5a421e5b.local-credentialless.webcontainer.io';
+const BASE_API_URL = "http://localhost:3000";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
@@ -25,12 +24,8 @@ export class AuthService {
     const url = `${BASE_API_URL}/register`;
 
     return this.http
-      .get(url)
+      .post(url, user, this.getHttpOptions())
       .pipe(catchError((error) => this.handleError(error)));
-
-    // return this.http
-    //   .post(url, user, this.getHttpOptions())
-    //   .pipe(catchError((error) => this.handleError(error)));
   }
 
   /**
@@ -50,7 +45,7 @@ export class AuthService {
    */
   private getHttpOptions() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     });
 
     return {
@@ -64,19 +59,17 @@ export class AuthService {
    * @param error - HTTP error response
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMsg = 'An unknown error occurred!';
+    let errorMsg = "An unknown error occurred!";
 
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMsg = `Client Error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMsg = `Error Code: ${error.status}\nMessage: ${
-        error.error?.error || error.message
-      }`;
+      errorMsg = `Error Message: ${error.error?.error || error.message}`;
     }
 
-    console.error('[AuthService Error]', errorMsg);
+    console.error("[AuthService Error]", errorMsg);
 
     return throwError(() => new Error(errorMsg));
   }

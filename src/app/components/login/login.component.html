@@ -1,22 +1,50 @@
-<h2>Login</h2>
-<form (submit)="onSubmit()">
-  <label for="username">Username</label>
-  <input
-    type="text"
-    [(ngModel)]="credentials.username"
-    name="username"
-    required
-  />
+<div class="form-container">
+  <form (ngSubmit)="onSubmit()" class="form-box">
+    <h2>Login</h2>
 
-  <label for="password">Password</label>
-  <input
-    type="password"
-    [(ngModel)]="credentials.password"
-    name="password"
-    required
-  />
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        id="username"
+        name="username"
+        [(ngModel)]="credentials.username"
+        required
+      />
+    </div>
 
-  <button type="submit">Login</button>
-</form>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="credentials.password"
+        required
+      />
+    </div>
 
-<p>{{ message }}</p>
+    <button
+      type="submit"
+      [disabled]="!credentials.username || !credentials.password"
+      class="submit-button"
+    >
+      Login
+    </button>
+
+    <!-- ✅ Success/Error Message -->
+    <div
+      *ngIf="message"
+      [ngClass]="{
+        'message-success': messageType === 'success',
+        'message-error': messageType === 'error'
+      }"
+    >
+      {{ message }}
+    </div>
+
+    <div class="login-link">
+      Don't have an account yet?
+      <a routerLink="/register">Register</a>
+    </div>
+  </form>
+</div>
